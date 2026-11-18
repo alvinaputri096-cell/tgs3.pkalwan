@@ -1,23 +1,35 @@
 
-#include <iostream>
-#include <string>
-using namespace std;
+name: Build C++ EXE
 
-int main() {
-    cout << "==========================" << endl;
-    cout << "     PROGRAM C++ SAYA     " << endl;
-    cout << "==========================" << endl;
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - master
 
-    string nama;
+jobs:
+  build:
+    runs-on: windows-latest
 
-    cout << "Masukkan nama: ";
-    getline(cin, nama);
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-    cout << "\nHalo, " << nama << "!" << endl;
-    cout << "Program berhasil dijalankan." << endl;
+      - name: Install MinGW
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          update: true
+          install: mingw-w64-x86_64-gcc
 
-    cout << "\nTekan Enter untuk keluar...";
-    cin.get();
+      - name: Compile C++ to EXE
+        shell: msys2 {0}
+        run: |
+          g++ main.cpp -o program.exe -static -std=c++17
 
-    return 0;
-}
+      - name: Upload EXE
+        uses: actions/upload-artifact@v4
+        with:
+          name: Program-EXE
+          path: program.exe
