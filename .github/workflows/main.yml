@@ -1,0 +1,23 @@
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    cout << "==========================" << endl;
+    cout << "     PROGRAM C++ SAYA     " << endl;
+    cout << "==========================" << endl;
+
+    string nama;
+
+    cout << "Masukkan nama: ";
+    getline(cin, nama);
+
+    cout << "\nHalo, " << nama << "!" << endl;
+    cout << "Program berhasil dijalankan." << endl;
+
+    cout << "\nTekan Enter untuk keluar...";
+    cin.get();
+
+    return 0;
+}
